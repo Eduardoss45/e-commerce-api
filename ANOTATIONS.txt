@@ -1,0 +1,45 @@
+1. Que evento ele consome?
+2. O que ele faz com esse evento?
+3. Que evento ele publica?
+4. O que acontece se falhar?
+
+Order Service
+
+Consome: payment.processed | payment.failed | inventory.failed
+Ação:
+- cria pedido via HTTP
+- atualiza status do pedido com base nos eventos consumidos
+Publica: order.created | order.completed | order.cancelled
+
+Falha:
+- erro interno → http 500
+
+Inventory Service
+
+Consome: order.created
+Ação: verifica estoque e reserva
+Publica: inventory.reserved | inventory.failed
+
+Falha:
+- sem estoque → inventory.failed
+- erro técnico → retry
+
+Payment Service
+
+Consome: inventory.reserved
+Ação: processa pagamento do pedido
+Publica: payment.processed | payment.failed
+
+Falha:
+- pagamento inválido → payment.failed
+- erro técnico → retry
+
+Notification Service
+
+Consome: order.completed | order.cancelled
+Ação:
+- envia notificação ao usuário sobre status do pedido
+Publica: NA
+
+Falha:
+- erro técnico → retry
