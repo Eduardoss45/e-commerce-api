@@ -20,7 +20,7 @@ services:
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: app
-      POSTGRES_DB: e_commerce_db
+      POSTGRES_DB: inventory_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
