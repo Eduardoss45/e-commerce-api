@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS products (
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(120) NOT NULL,
+    stock INTEGER NOT NULL,
+    price NUMERIC(10,2) NOT NULL
+);
