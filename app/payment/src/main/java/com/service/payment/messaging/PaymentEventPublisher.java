@@ -4,6 +4,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.service.payment.dto.EventEnvelope;
 import com.service.payment.dto.PaymentFailedPayload;
 import com.service.payment.dto.PaymentProcessedPayload;
 
@@ -17,12 +18,12 @@ public class PaymentEventPublisher {
         this.objectMapper = objectMapper;
     }
 
-    public void publishProcessed(PaymentProcessedPayload payload) {
-        send("payment.exchange", "payment.processed", payload);
+    public void publishProcessed(EventEnvelope<PaymentProcessedPayload> event) {
+        send("payment.exchange", "payment.processed", event);
     }
 
-    public void publishFailed(PaymentFailedPayload payload) {
-        send("payment.exchange", "payment.failed", payload);
+    public void publishFailed(EventEnvelope<PaymentFailedPayload> event) {
+        send("payment.exchange", "payment.failed", event);
     }
 
     private void send(String exchange, String routingKey, Object payload) {

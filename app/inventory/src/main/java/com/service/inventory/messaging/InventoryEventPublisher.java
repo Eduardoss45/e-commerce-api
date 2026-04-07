@@ -4,6 +4,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.service.inventory.dto.EventEnvelope;
 import com.service.inventory.dto.InventoryFailedPayload;
 import com.service.inventory.dto.InventoryReservedPayload;
 
@@ -17,11 +18,11 @@ public class InventoryEventPublisher {
         this.objectMapper = objectMapper;
     }
 
-    public void publishReserved(InventoryReservedPayload payload) {
+    public void publishReserved(EventEnvelope<InventoryReservedPayload> payload) {
         send("inventory.exchange", "inventory.reserved", payload);
     }
 
-    public void publishFailed(InventoryFailedPayload payload) {
+    public void publishFailed(EventEnvelope<InventoryFailedPayload> payload) {
         send("inventory.exchange", "inventory.failed", payload);
     }
 

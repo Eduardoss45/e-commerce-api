@@ -1,13 +1,15 @@
 package com.service.payment.service;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.service.payment.dto.InventoryReservedPayload;
+import com.service.payment.dto.EventEnvelope;
 import com.service.payment.dto.PaymentFailedPayload;
 import com.service.payment.dto.PaymentDto;
 import com.service.payment.dto.PaymentProcessedPayload;
+import com.service.payment.dto.PaymentRequestedPayload;
 import com.service.payment.messaging.PaymentEventPublisher;
 
 @Service
@@ -18,14 +20,20 @@ public class PaymentService {
         this.publisher = publisher;
     }
 
-    public void process(InventoryReservedPayload payload) {
+    public void process(PaymentRequestedPayload payload) {
         PaymentDto payment = payload.getPayment();
         if (!isValidPayment(payment)) {
             PaymentFailedPayload fail = new PaymentFailedPayload(
                     payload.getOrderId(),
                     UUID.randomUUID().toString(),
                     "DECLINED");
-            publisher.publishFailed(fail);
+            EventEnvelope<PaymentFailedPayload> event = new EventEnvelope<>(
+                    UUID.randomUUID().toString(),
+                    "payment",
+                    "payment.failed",
+                    Instant.now(),
+                    fail);
+            publisher.publishFailed(event);
             return;
         }
 
@@ -34,13 +42,25 @@ public class PaymentService {
                     payload.getOrderId(),
                     UUID.randomUUID().toString(),
                     "DECLINED");
-            publisher.publishFailed(fail);
+            EventEnvelope<PaymentFailedPayload> event = new EventEnvelope<>(
+                    UUID.randomUUID().toString(),
+                    "payment",
+                    "payment.failed",
+                    Instant.now(),
+                    fail);
+            publisher.publishFailed(event);
         } else {
             PaymentProcessedPayload ok = new PaymentProcessedPayload(
                     payload.getOrderId(),
                     UUID.randomUUID().toString(),
                     "APPROVED");
-            publisher.publishProcessed(ok);
+            EventEnvelope<PaymentProcessedPayload> event = new EventEnvelope<>(
+                    UUID.randomUUID().toString(),
+                    "payment",
+                    "payment.processed",
+                    Instant.now(),
+                    ok);
+            publisher.publishProcessed(event);
         }
     }
 

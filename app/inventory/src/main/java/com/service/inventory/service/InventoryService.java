@@ -1,8 +1,12 @@
 package com.service.inventory.service;
 
+import java.time.Instant;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.service.inventory.domain.Product;
+import com.service.inventory.dto.EventEnvelope;
 import com.service.inventory.dto.InventoryFailedPayload;
 import com.service.inventory.dto.InventoryReservedPayload;
 import com.service.inventory.dto.ItemDto;
@@ -29,7 +33,13 @@ public class InventoryService {
                 InventoryFailedPayload failed = new InventoryFailedPayload(
                         payload.getOrderId(),
                         "OUT_OF_STOCK");
-                publisher.publishFailed(failed);
+                EventEnvelope<InventoryFailedPayload> event = new EventEnvelope<>(
+                        UUID.randomUUID().toString(),
+                        "inventory",
+                        "inventory.failed",
+                        Instant.now(),
+                        failed);
+                publisher.publishFailed(event);
                 return;
             }
         }
@@ -37,6 +47,12 @@ public class InventoryService {
         InventoryReservedPayload reserved = new InventoryReservedPayload(
                 payload.getOrderId(),
                 payload.getItems());
-        publisher.publishReserved(reserved);
+        EventEnvelope<InventoryReservedPayload> event = new EventEnvelope<>(
+                UUID.randomUUID().toString(),
+                "inventory",
+                "inventory.reserved",
+                Instant.now(),
+                reserved);
+        publisher.publishReserved(event);
     }
 }
