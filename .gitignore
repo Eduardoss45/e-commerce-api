@@ -1,8 +1,49 @@
-# Ignore Gradle project-specific cache directory
+# Gradle
 .gradle
-
-# Ignore Gradle build output directory
+.gradle-cache
 build
 
-# Ignore Kotlin plugin data
+# Kotlin
 .kotlin
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+nbproject/
+
+# Logs
+*.log
+
+# Java
+*.class
+
+# Spring Boot
+application-local.properties
+application-local.yml
+application-local.yaml
+
+# Environment files
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Java heap dumps / profiler dumps
+*.hprof
+
+# Maven (caso utilize em algum momento)
+target/
+
+# Generated files
+out/

@@ -21,9 +21,9 @@ API Gateway
 
 ## 🎯 Papel
 
-* ponto único de entrada
-* roteamento HTTP → services
-* (opcional) autenticação / rate limit
+- ponto único de entrada
+- roteamento HTTP → services
+- (opcional) autenticação / rate limit
 
 ---
 
@@ -204,17 +204,17 @@ Services NÃO se chamam via HTTP
 
 ## Gateway
 
-* roteia corretamente
-* não tem regra de negócio
+- roteia corretamente
+- não tem regra de negócio
 
 ---
 
 ## Service
 
-* faz UMA responsabilidade
-* publica evento
-* consome evento
-* não depende diretamente de outro service
+- faz UMA responsabilidade
+- publica evento
+- consome evento
+- não depende diretamente de outro service
 
 ---
 
@@ -222,10 +222,10 @@ Services NÃO se chamam via HTTP
 
 Você NÃO precisa agora:
 
-* auth centralizado
-* service discovery
-* config server
-* saga completa
+- auth centralizado
+- service discovery
+- config server
+- saga completa
 
 ---
 
@@ -233,7 +233,7 @@ Você NÃO precisa agora:
 
 Esse esquema já é suficiente para:
 
-* montar docker-compose
-* subir RabbitMQ
-* criar serviços isolados
-* implementar fluxo real
+- montar docker-compose
+- subir RabbitMQ
+- criar serviços isolados
+- implementar fluxo real
