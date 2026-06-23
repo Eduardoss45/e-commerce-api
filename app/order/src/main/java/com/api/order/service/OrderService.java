@@ -1,8 +1,7 @@
 package com.api.order.service;
 
 import java.time.Instant;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -27,7 +26,6 @@ import com.api.order.repository.OrderRepository;
 public class OrderService {
     private final OrderRepository repository;
     private final OrderEventPublisher publisher;
-    private final Map<String, PaymentDto> paymentCache = new ConcurrentHashMap<>();
 
     public OrderService(OrderRepository repository, OrderEventPublisher publisher) {
         this.repository = repository;
@@ -37,9 +35,13 @@ public class OrderService {
     public OrderResponse createOrder(OrderRequest request) {
         String orderId = UUID.randomUUID().toString();
 
-        OrderEntity entity = new OrderEntity(orderId, "CREATED", Instant.now());
+        OrderEntity entity = new OrderEntity();
+        entity.setId(orderId);
+        entity.setStatus("CREATED");
+        entity.setCreatedAt(Instant.now());
+        entity.setPaymentCard(request.getPayment().getCardNumber());
+        entity.setPaymentCvv(request.getPayment().getCvv());
         repository.save(entity);
-        paymentCache.put(orderId, request.getPayment());
 
         OrderCreatedPayload payload = new OrderCreatedPayload(orderId, request.getItems());
 
@@ -55,14 +57,23 @@ public class OrderService {
     }
 
     public void onInventoryReserved(InventoryReservedPayload payload) {
-        PaymentDto payment = paymentCache.get(payload.getOrderId());
-        if (payment == null) {
-            throw new IllegalStateException("Payment data not found for order " + payload.getOrderId());
-        }
+
+        OrderEntity order = repository.findById(payload.getOrderId())
+                .orElseThrow(() -> new IllegalStateException("Order not found"));
+
+        PaymentDto payment = new PaymentDto(
+                order.getPaymentCard(),
+                order.getPaymentCvv());
+
         PaymentRequestedPayload req = new PaymentRequestedPayload(payload.getOrderId(), payment);
 
         EventEnvelope<PaymentRequestedPayload> event = new EventEnvelope<>(
-                UUID.randomUUID().toString(), "order", "payment.requested", Instant.now(), req);
+                UUID.randomUUID().toString(),
+                "order",
+                "payment.requested",
+                Instant.now(),
+                req);
+
         publisher.publishPaymentRequested(event);
     }
 

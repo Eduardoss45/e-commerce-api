@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfig {
 
     @Bean
-    public DirectExchange paymentExchange() {
-        return new DirectExchange("payment.exchange");
+    public DirectExchange orderExchange() {
+        return new DirectExchange("order.exchange", true, false);
     }
 
     @Bean
@@ -21,9 +21,24 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding paymentProcessedBinding(
+    public Binding orderCompletedBinding(
             Queue notificationQueue,
-            DirectExchange paymentExchange) {
-        return BindingBuilder.bind(notificationQueue).to(paymentExchange).with("payment.processed");
+            DirectExchange orderExchange) {
+
+        return BindingBuilder
+                .bind(notificationQueue)
+                .to(orderExchange)
+                .with("order.completed");
+    }
+
+    @Bean
+    public Binding orderCancelledBinding(
+            Queue notificationQueue,
+            DirectExchange orderExchange) {
+
+        return BindingBuilder
+                .bind(notificationQueue)
+                .to(orderExchange)
+                .with("order.cancelled");
     }
 }

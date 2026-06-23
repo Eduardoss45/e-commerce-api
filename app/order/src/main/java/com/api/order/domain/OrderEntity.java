@@ -21,4 +21,8 @@ public class OrderEntity {
     private String status;
 
     private Instant createdAt;
+
+    private String paymentCard;
+
+    private String paymentCvv;
 }

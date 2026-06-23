@@ -1,9 +1,3 @@
-## 3. Fase 2 - Pipeline Completo
-- Implementar Payment Service consumindo inventory.reserved.
-- Processar pagamento (mock) e publicar payment.processed.
-- Implementar Notification Service consumindo payment.processed.
-- Registrar notificacao (log/email simulado).
-
 ## 4. Fase 3 - Resiliencia
 - Implementar retry nos consumers.
 - Configurar Dead Letter Queue (DLQ).
