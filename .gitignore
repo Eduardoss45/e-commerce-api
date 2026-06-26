@@ -1,10 +1,8 @@
 # Gradle
-.gradle
-.gradle-cache
-build
-
-# Kotlin
-.kotlin
+.gradle/
+.gradle-cache/
+build/
+out/
 
 # IntelliJ IDEA
 .idea/
@@ -13,37 +11,23 @@ build
 # VS Code
 .vscode/
 
-# Eclipse
+# Eclipse / NetBeans
 .project
 .classpath
 .settings/
-
-# NetBeans
 nbproject/
 
 # Logs
 *.log
 
-# Java
+# Java artifacts
 *.class
+*.hprof
 
-# Spring Boot
-application-local.properties
-application-local.yml
-application-local.yaml
-
-# Environment files
+# Spring Boot local configs
+application-local.*
 .env
 
 # OS files
 .DS_Store
 Thumbs.db
-
-# Java heap dumps / profiler dumps
-*.hprof
-
-# Maven (caso utilize em algum momento)
-target/
-
-# Generated files
-out/
