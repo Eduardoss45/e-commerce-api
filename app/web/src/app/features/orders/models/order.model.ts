@@ -1,4 +1,9 @@
+import { OrdersStatus } from '../../../types';
+
 export interface Order {
-    product: string;
-    quantity: number;
+  id: string;
+  product: string;
+  quantity: number;
+  status: OrdersStatus;
+  createdAt: number;
 }

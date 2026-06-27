@@ -1,10 +1,20 @@
 <div class="max-w-md mx-auto p-4 space-y-4" [formGroup]="form">
-  <input
-    class="w-full border p-2"
-    placeholder="Produto"
-    formControlName="product"
-    [formGroup]="form"
-  />
-  <input class="w-full border p-2" type="number" formControlName="quantity" [formGroup]="form" />
-  <button class="bg-blue-600 text-white px-4 py-2" (click)="submit()">Criar pedido</button>
+  <input class="w-full border p-2" placeholder="Produto" formControlName="product" />
+  @if (product.invalid && product.touched) {
+    <div>Produto é obrigatório (mínimo 3 caracteres)</div>
+  }
+  <input class="w-full border p-2" type="number" formControlName="quantity" />
+  @if (quantity.invalid && (quantity.touched || submitted)) {
+    <div>Quantidade inválida (Deve ser no mínimo 1 ou máximo 100)</div>
+  }
+  <button
+    class="px-4 py-2 text-white transition"
+    [class.bg-blue-600]="form.valid"
+    [class.bg-gray-400]="form.invalid"
+    [class.cursor-not-allowed]="form.invalid"
+    [disabled]="form.invalid"
+    (click)="submit()"
+  >
+    Criar pedido
+  </button>
 </div>

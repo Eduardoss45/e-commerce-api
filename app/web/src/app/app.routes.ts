@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { AppShell } from './core/layouts/app-shell/app-shell';
-import { CreateOrder } from './features/orders/pages/create-order/create-order';
-import { OrderList } from './features/orders/pages/order-list/order-list';
+import { OrdersDashboard } from './features/orders/pages/orders-dashboard/orders-dashboard';
 
 export const routes: Routes = [
   {
@@ -9,18 +8,10 @@ export const routes: Routes = [
     component: AppShell,
     children: [
       {
-        path: '',
-        loadComponent: () =>
-          import('./features/orders/pages/create-order/create-order').then((m) => m.CreateOrder),
-      },
-      {
-        path: 'orders/new',
-        component: CreateOrder,
-      },
-      {
         path: 'orders',
-        component: OrderList,
+        component: OrdersDashboard,
       },
+      { path: '', redirectTo: 'orders', pathMatch: 'full' },
     ],
   },
 ];

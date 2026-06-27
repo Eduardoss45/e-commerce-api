@@ -1,0 +1,1 @@
+export type OrdersStatus = 'CREATED' | 'PROCESSING' | 'PAID' | 'FAILED' | 'COMPLETED';
