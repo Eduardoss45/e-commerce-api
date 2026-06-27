@@ -1,0 +1,10 @@
+<div class="p-4 max-w-md mx-auto space-y-3">
+  <h2 class="text-xl font-bold">Orders</h2>
+
+  @for (order of orders$ | async; track order) {
+    <div class="border p-3 rounded">
+      <div><strong>Produto: </strong>{{ order.product }}</div>
+      <div><strong>Quantidade: </strong>{{ order.quantity }}</div>
+    </div>
+  }
+</div>
