@@ -1,22 +1,50 @@
-<div class="p-4 max-w-md mx-auto">
-  <div class="space-y-3 max-h-[70vh] overflow-y-auto pr-2">
-    @for (order of orders$ | async; track order) {
-      <div class="bg-black text-white px-6 py-3 rounded-2xl">
-        <div class="my-2 flex justify-between"><strong>Id: </strong>{{ order.id }}</div>
+<div class="p-4 max-w-6xl mx-auto">
+  <div
+    class="
+      grid
+      grid-cols-1
+      sm:grid-cols-2
+      lg:grid-cols-3
+      gap-4
+      max-h-[70vh]
+      overflow-y-auto
+      scrollbar-hide
+    "
+  >
+    @for (order of orders$ | async; track order.id) {
+      <div class="bg-zinc-800 text-white px-6 py-3 rounded-2xl text-xs">
         <div class="my-2 flex justify-between">
-          <strong>Criado em: </strong>
-          {{ order.createdAt | date: 'dd/MM/yyyy' }}
-          às
-          {{ order.createdAt | date: 'HH:mm:ss' }}
+          <strong>Id:</strong>
+          {{ order.id }}
         </div>
-        <div class="my-2 flex justify-between"><strong>Produto: </strong>{{ order.product }}</div>
+
         <div class="my-2 flex justify-between">
-          <strong>Quantidade: </strong>{{ order.quantity }}
+          <strong>Criado em:</strong>
+          <span>
+            {{ order.createdAt | date: 'dd/MM/yyyy' }}
+            às
+            {{ order.createdAt | date: 'HH:mm:ss' }}
+          </span>
         </div>
+
+        <div class="my-2 flex justify-between">
+          <strong>Produto:</strong>
+          {{ order.product }}
+        </div>
+
+        <div class="my-2 flex justify-between">
+          <strong>Quantidade:</strong>
+          {{ order.quantity }}
+        </div>
+
         <div class="my-2 flex items-center justify-between">
-          <strong>Status: </strong>
+          <strong>Status:</strong>
+
           <span class="flex items-center gap-2">
-            <span class="w-4 h-4 rounded-full" [ngClass]="statusColor[order.status]"></span>
+            <span
+              class="w-4 h-4 rounded-full"
+              [ngClass]="statusColor[order.status]"
+            ></span>
 
             {{ order.status }}
           </span>

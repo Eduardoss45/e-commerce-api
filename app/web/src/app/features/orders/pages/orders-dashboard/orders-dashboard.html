@@ -1,13 +1,78 @@
-<div class="grid grid-cols-2 gap-6 p-6">
-  <section class="bg-zinc-200 shadow-2xl rounded-2xl p-4">
-    <h2 class="text-xl mb-4">Criar pedido</h2>
+<div
+  class="grid grid-cols-1 gap-2 bg-zinc-900 shadow-2xl rounded-2xl w-full max-w-[75vw] h-[80vh] mx-auto overflow-hidden"
+>
+  <!-- Área superior -->
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+    <!-- Criar pedido -->
+    <div>
+      <h2 class="text-xl mb-4 text-rose-400">Criar pedido</h2>
 
-    <app-create-order />
+      <app-create-order />
+    </div>
+
+    <!-- Estatísticas -->
+    <div>
+      <h2 class="text-xl mb-4 text-sky-400">Estatísticas</h2>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-zinc-800 rounded-xl p-4">
+          <span class="text-zinc-400 text-sm"> Pedidos </span>
+
+          <strong class="block text-2xl text-white"> 120 </strong>
+        </div>
+
+        <div class="bg-zinc-800 rounded-xl p-4">
+          <span class="text-zinc-400 text-sm"> Sucesso </span>
+
+          <strong class="block text-2xl text-green-400"> 98% </strong>
+        </div>
+
+        <div class="bg-zinc-800 rounded-xl p-4">
+          <span class="text-zinc-400 text-sm"> Falhas </span>
+
+          <strong class="block text-2xl text-red-400"> 2 </strong>
+        </div>
+
+        <div class="bg-zinc-800 rounded-xl p-4">
+          <span class="text-zinc-400 text-sm"> Tempo médio </span>
+
+          <strong class="block text-2xl text-white"> 1.8s </strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Serviços -->
+    <div>
+      <h2 class="text-xl mb-4 text-emerald-400">Serviços</h2>
+
+      <div class="space-y-2 max-h-55 overflow-y-auto scrollbar-hide">
+        <div class="flex items-center justify-between bg-zinc-800 rounded-xl p-3">
+          <span class="text-white"> Order Service </span>
+
+          <span class="w-3 h-3 rounded-full bg-green-500"></span>
+        </div>
+
+        <div class="flex items-center justify-between bg-zinc-800 rounded-xl p-3">
+          <span class="text-white"> Payment Service </span>
+
+          <span class="w-3 h-3 rounded-full bg-green-500"></span>
+        </div>
+
+        <div class="flex items-center justify-between bg-zinc-800 rounded-xl p-3">
+          <span class="text-white"> Inventory Service </span>
+
+          <span class="w-3 h-3 rounded-full bg-red-500"></span>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="bg-zinc-200 shadow-2xl rounded-2xl p-4">
-    <h2 class="text-xl mb-4">Pedidos</h2>
+  <!-- Lista -->
+  <section class="p-4 min-h-0 overflow-hidden">
+    <h2 class="text-xl mb-4 text-sky-400">Pedidos</h2>
 
-    <app-order-list />
+    <div class="h-full overflow-y-auto scrollbar-hide pb-4 border-t border-zinc-200">
+      <app-order-list />
+    </div>
   </section>
 </div>

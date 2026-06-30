@@ -1,9 +1,9 @@
-<div class="max-w-md mx-auto p-4 space-y-4" [formGroup]="form">
-  <input class="w-full border p-2" placeholder="Produto" formControlName="product" />
+<div class="max-w-md mx-auto p-4 space-y-4 text-yellow-400" [formGroup]="form">
+  <input class="w-full border p-2 rounded" placeholder="Produto" formControlName="product" />
   @if (product.invalid && product.touched) {
     <div>Produto é obrigatório (mínimo 3 caracteres)</div>
   }
-  <input class="w-full border p-2" type="number" formControlName="quantity" />
+  <input class="w-full border p-2 rounded" type="number" formControlName="quantity" />
   @if (quantity.invalid && (quantity.touched || submitted)) {
     <div>Quantidade inválida (Deve ser no mínimo 1 ou máximo 100)</div>
   }
