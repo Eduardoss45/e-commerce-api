@@ -1,17 +1,56 @@
-<div class="max-w-md mx-auto p-4 space-y-4 text-yellow-400" [formGroup]="form">
-  <input class="w-full border p-2 rounded" placeholder="Produto" formControlName="product" />
-  @if (product.invalid && product.touched) {
-    <div>Produto é obrigatório (mínimo 3 caracteres)</div>
+<div class="max-w-md mx-auto p-4 space-y-6 text-yellow-400" [formGroup]="form">
+  <h2 class="text-lg font-bold">Produto</h2>
+
+  <select
+    class="w-full border p-2 rounded border-sky-400 text-sky-400 bg-zinc-950 outline-none"
+    formControlName="productId"
+  >
+    <option [ngValue]="null">Selecione um produto</option>
+
+    @for (product of products; track product.id) {
+      <option [ngValue]="product.id">
+        {{ product.name }}
+        - R$ {{ product.price }}
+      </option>
+    }
+  </select>
+
+  @if (productId.invalid && submitted) {
+    <div>Produto obrigatório</div>
   }
-  <input class="w-full border p-2 rounded" type="number" formControlName="quantity" />
-  @if (quantity.invalid && (quantity.touched || submitted)) {
-    <div>Quantidade inválida (Deve ser no mínimo 1 ou máximo 100)</div>
+
+  <h2 class="text-lg font-bold">Quantidade</h2>
+
+  <input
+    class="w-full border p-2 rounded border-sky-400 text-sky-400 bg-zinc-950 outline-none"
+    type="number"
+    formControlName="quantity"
+  />
+
+  @if (quantity.invalid && submitted) {
+    <div>Quantidade deve ser entre 1 e 100</div>
   }
+
+  <h2 class="text-lg font-bold">Pagamento</h2>
+
+  <div class="space-y-2">
+    @for (p of paymentProfiles; track p.id) {
+      <label class="flex items-center gap-2 border p-2 rounded">
+        <input type="radio" formControlName="paymentProfile" [value]="p.id" />
+
+        <span>{{ p.label }}</span>
+      </label>
+    }
+  </div>
+
+  @if (form.get('paymentProfile')?.invalid && submitted) {
+    <div>Selecione um método de pagamento</div>
+  }
+
   <button
     class="px-4 py-2 text-white transition"
-    [class.bg-blue-600]="form.valid"
+    [class.bg-blue-400]="form.valid"
     [class.bg-gray-400]="form.invalid"
-    [class.cursor-not-allowed]="form.invalid"
     [disabled]="form.invalid"
     (click)="submit()"
   >
